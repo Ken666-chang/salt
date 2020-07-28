@@ -1,0 +1,40 @@
+#include<iostream>
+#include<math.h>
+#include<opencv2\opencv.hpp>
+using namespace std;
+using namespace cv;
+#define PI 3.1415926;
+void salt(Mat image, int n)
+{
+	int i, j;
+	for (int k=0; k < n; k++)
+	{
+		i = rand() % image.cols;//x axis
+		j = rand() % image.rows;//y axis
+		if (image.type() == CV_8UC1)  //判斷是否為灰階圖
+		{
+			image.at<uchar>(j, i) = 255; //.at(y,x)
+		}
+		else if (image.type() == CV_8UC3)  //判斷是否為彩色圖像
+		{
+			image.at<Vec3b>(j, i)[0] = 255;
+			image.at<Vec3b>(j, i)[1] = 255;
+			image.at<Vec3b>(j, i)[2] = 255;
+		}
+	}
+}
+
+int main()
+{
+	Mat src = imread("ken.jpg", 1);
+	int width = src.cols, length = src.rows;
+	salt(src, 10000);
+	namedWindow("windowken", 0);
+	imshow("windowken",src);
+	
+	
+
+	//system("pause");
+	waitKey(0);
+	return 0;
+}
